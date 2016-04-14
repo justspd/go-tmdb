@@ -15,6 +15,6 @@ func (tmdb *TMDb) GetGuestSessionRatedMovies(sessionID string, options map[strin
 	var favorites MoviePagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/guest_session/%v/rated_movies?api_key=%s%s", baseURL, sessionID, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &favorites)
+	result, err := getTmdb(uri, tmdb.client, &favorites)
 	return result.(*MoviePagedResults), err
 }

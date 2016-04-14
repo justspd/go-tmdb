@@ -202,7 +202,7 @@ func (tmdb *TMDb) GetPersonInfo(id int, options map[string]string) (*Person, err
 	var personInfo Person
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/person/%v?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &personInfo)
+	result, err := getTmdb(uri, tmdb.client, &personInfo)
 	return result.(*Person), err
 }
 
@@ -215,7 +215,7 @@ func (tmdb *TMDb) GetPersonChanges(id int, options map[string]string) (*PersonCh
 	var changes PersonChanges
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/person/%v/changes?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &changes)
+	result, err := getTmdb(uri, tmdb.client, &changes)
 	return result.(*PersonChanges), err
 }
 
@@ -228,7 +228,7 @@ func (tmdb *TMDb) GetPersonCombinedCredits(id int, options map[string]string) (*
 	var credits PersonCombinedCredits
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/person/%v/combined_credits?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &credits)
+	result, err := getTmdb(uri, tmdb.client, &credits)
 	return result.(*PersonCombinedCredits), err
 }
 
@@ -237,7 +237,7 @@ func (tmdb *TMDb) GetPersonCombinedCredits(id int, options map[string]string) (*
 func (tmdb *TMDb) GetPersonExternalIds(id int) (*TvExternalIds, error) {
 	var ids TvExternalIds
 	uri := fmt.Sprintf("%s/person/%v/external_ids?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := getTmdb(uri, &ids)
+	result, err := getTmdb(uri, tmdb.client, &ids)
 	return result.(*TvExternalIds), err
 }
 
@@ -246,7 +246,7 @@ func (tmdb *TMDb) GetPersonExternalIds(id int) (*TvExternalIds, error) {
 func (tmdb *TMDb) GetPersonImages(id int) (*PersonImages, error) {
 	var images PersonImages
 	uri := fmt.Sprintf("%s/person/%v/images?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := getTmdb(uri, &images)
+	result, err := getTmdb(uri, tmdb.client, &images)
 	return result.(*PersonImages), err
 }
 
@@ -255,7 +255,7 @@ func (tmdb *TMDb) GetPersonImages(id int) (*PersonImages, error) {
 func (tmdb *TMDb) GetPersonLatest() (*PersonLatest, error) {
 	var latest PersonLatest
 	uri := fmt.Sprintf("%s/person/latest?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := getTmdb(uri, &latest)
+	result, err := getTmdb(uri, tmdb.client, &latest)
 	return result.(*PersonLatest), err
 }
 
@@ -268,7 +268,7 @@ func (tmdb *TMDb) GetPersonMovieCredits(id int, options map[string]string) (*Per
 	var credits PersonMovieCredits
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/person/%v/movie_credits?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &credits)
+	result, err := getTmdb(uri, tmdb.client, &credits)
 	return result.(*PersonMovieCredits), err
 }
 
@@ -280,7 +280,7 @@ func (tmdb *TMDb) GetPersonPopular(options map[string]string) (*PersonPopular, e
 	var popular PersonPopular
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/person/popular?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &popular)
+	result, err := getTmdb(uri, tmdb.client, &popular)
 	return result.(*PersonPopular), err
 }
 
@@ -293,7 +293,7 @@ func (tmdb *TMDb) GetPersonTaggedImages(id int, options map[string]string) (*Per
 	var images PersonTaggedImages
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/person/%v/tagged_images?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &images)
+	result, err := getTmdb(uri, tmdb.client, &images)
 	return result.(*PersonTaggedImages), err
 }
 
@@ -306,6 +306,6 @@ func (tmdb *TMDb) GetPersonTvCredits(id int, options map[string]string) (*Person
 	var credits PersonTvCredits
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/person/%v/tv_credits?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &credits)
+	result, err := getTmdb(uri, tmdb.client, &credits)
 	return result.(*PersonTvCredits), err
 }

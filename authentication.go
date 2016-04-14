@@ -29,7 +29,7 @@ type AuthenticationGuestSession struct {
 func (tmdb *TMDb) GetAuthToken() (*AuthenticationToken, error) {
 	var token AuthenticationToken
 	uri := fmt.Sprintf("%s/authentication/token/new?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := getTmdb(uri, &token)
+	result, err := getTmdb(uri, tmdb.client, &token)
 	return result.(*AuthenticationToken), err
 }
 
@@ -38,7 +38,7 @@ func (tmdb *TMDb) GetAuthToken() (*AuthenticationToken, error) {
 func (tmdb *TMDb) GetAuthValidateToken(token, user, password string) (*AuthenticationToken, error) {
 	var validToken AuthenticationToken
 	uri := fmt.Sprintf("%s/authentication/token/validate_with_login?api_key=%s&request_token=%s&username=%s&password=%s", baseURL, tmdb.apiKey, token, user, password)
-	result, err := getTmdb(uri, &validToken)
+	result, err := getTmdb(uri, tmdb.client, &validToken)
 	return result.(*AuthenticationToken), err
 }
 
@@ -47,7 +47,7 @@ func (tmdb *TMDb) GetAuthValidateToken(token, user, password string) (*Authentic
 func (tmdb *TMDb) GetAuthSession(token string) (*AuthenticationSession, error) {
 	var session AuthenticationSession
 	uri := fmt.Sprintf("%s/authentication/session/new?api_key=%s&request_token=%s", baseURL, tmdb.apiKey, token)
-	result, err := getTmdb(uri, &session)
+	result, err := getTmdb(uri, tmdb.client, &session)
 	return result.(*AuthenticationSession), err
 }
 
@@ -56,6 +56,6 @@ func (tmdb *TMDb) GetAuthSession(token string) (*AuthenticationSession, error) {
 func (tmdb *TMDb) GetAuthGuestSession() (*AuthenticationGuestSession, error) {
 	var session AuthenticationGuestSession
 	uri := fmt.Sprintf("%s/authentication/guest_session/new?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := getTmdb(uri, &session)
+	result, err := getTmdb(uri, tmdb.client, &session)
 	return result.(*AuthenticationGuestSession), err
 }

@@ -365,7 +365,7 @@ func (tmdb *TMDb) GetMovieInfo(id int, options map[string]string) (*Movie, error
 	var movie Movie
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &movie)
+	result, err := getTmdb(uri, tmdb.client, &movie)
 	return result.(*Movie), err
 }
 
@@ -374,7 +374,7 @@ func (tmdb *TMDb) GetMovieInfo(id int, options map[string]string) (*Movie, error
 func (tmdb *TMDb) GetMovieAccountStates(id int, sessionID string) (*MovieAccountState, error) {
 	var state MovieAccountState
 	uri := fmt.Sprintf("%s/movie/%v/account_states?api_key=%s&session_id=%s", baseURL, id, tmdb.apiKey, sessionID)
-	result, err := getTmdb(uri, &state)
+	result, err := getTmdb(uri, tmdb.client, &state)
 	return result.(*MovieAccountState), err
 }
 
@@ -387,7 +387,7 @@ func (tmdb *TMDb) GetMovieAlternativeTitles(id int, options map[string]string) (
 	var titles MovieAlternativeTitles
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v/alternative_titles?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &titles)
+	result, err := getTmdb(uri, tmdb.client, &titles)
 	return result.(*MovieAlternativeTitles), err
 }
 
@@ -400,7 +400,7 @@ func (tmdb *TMDb) GetMovieChanges(id int, options map[string]string) (*MovieChan
 	var changes MovieChanges
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v/changes?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &changes)
+	result, err := getTmdb(uri, tmdb.client, &changes)
 	return result.(*MovieChanges), err
 }
 
@@ -412,7 +412,7 @@ func (tmdb *TMDb) GetMovieCredits(id int, options map[string]string) (*MovieCred
 	var credits MovieCredits
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v/credits?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &credits)
+	result, err := getTmdb(uri, tmdb.client, &credits)
 	return result.(*MovieCredits), err
 }
 
@@ -426,7 +426,7 @@ func (tmdb *TMDb) GetMovieImages(id int, options map[string]string) (*MovieImage
 	var images MovieImages
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v/images?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &images)
+	result, err := getTmdb(uri, tmdb.client, &images)
 	return result.(*MovieImages), err
 }
 
@@ -438,7 +438,7 @@ func (tmdb *TMDb) GetMovieKeywords(id int, options map[string]string) (*MovieKey
 	var keywords MovieKeywords
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v/keywords?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &keywords)
+	result, err := getTmdb(uri, tmdb.client, &keywords)
 	return result.(*MovieKeywords), err
 }
 
@@ -447,7 +447,7 @@ func (tmdb *TMDb) GetMovieKeywords(id int, options map[string]string) (*MovieKey
 func (tmdb *TMDb) GetMovieLatest() (*Movie, error) {
 	var movie Movie
 	uri := fmt.Sprintf("%s/movie/latest?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := getTmdb(uri, &movie)
+	result, err := getTmdb(uri, tmdb.client, &movie)
 	return result.(*Movie), err
 }
 
@@ -461,7 +461,7 @@ func (tmdb *TMDb) GetMovieLists(id int, options map[string]string) (*MovieLists,
 	var lists MovieLists
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v/lists?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &lists)
+	result, err := getTmdb(uri, tmdb.client, &lists)
 	return result.(*MovieLists), err
 }
 
@@ -474,7 +474,7 @@ func (tmdb *TMDb) GetMovieNowPlaying(options map[string]string) (*MovieDatedResu
 	var nowPlaying MovieDatedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/now_playing?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &nowPlaying)
+	result, err := getTmdb(uri, tmdb.client, &nowPlaying)
 	return result.(*MovieDatedResults), err
 }
 
@@ -487,7 +487,7 @@ func (tmdb *TMDb) GetMoviePopular(options map[string]string) (*MoviePagedResults
 	var popular MoviePagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/popular?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &popular)
+	result, err := getTmdb(uri, tmdb.client, &popular)
 	return result.(*MoviePagedResults), err
 }
 
@@ -499,7 +499,7 @@ func (tmdb *TMDb) GetMovieReleases(id int, options map[string]string) (*MovieRel
 	var releases MovieReleases
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v/releases?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &releases)
+	result, err := getTmdb(uri, tmdb.client, &releases)
 	return result.(*MovieReleases), err
 }
 
@@ -513,7 +513,7 @@ func (tmdb *TMDb) GetMovieReviews(id int, options map[string]string) (*MovieRevi
 	var reviews MovieReviews
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v/reviews?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &reviews)
+	result, err := getTmdb(uri, tmdb.client, &reviews)
 	return result.(*MovieReviews), err
 }
 
@@ -527,7 +527,7 @@ func (tmdb *TMDb) GetMovieSimilar(id int, options map[string]string) (*MoviePage
 	var similar MoviePagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v/similar?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &similar)
+	result, err := getTmdb(uri, tmdb.client, &similar)
 	return result.(*MoviePagedResults), err
 }
 
@@ -540,7 +540,7 @@ func (tmdb *TMDb) GetMovieTopRated(options map[string]string) (*MoviePagedResult
 	var topRated MoviePagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/top_rated?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &topRated)
+	result, err := getTmdb(uri, tmdb.client, &topRated)
 	return result.(*MoviePagedResults), err
 }
 
@@ -552,7 +552,7 @@ func (tmdb *TMDb) GetMovieTranslations(id int, options map[string]string) (*Movi
 	var translations MovieTranslations
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v/translations?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &translations)
+	result, err := getTmdb(uri, tmdb.client, &translations)
 	return result.(*MovieTranslations), err
 }
 
@@ -565,7 +565,7 @@ func (tmdb *TMDb) GetMovieVideos(id int, options map[string]string) (*MovieVideo
 	var videos MovieVideos
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/%v/videos?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &videos)
+	result, err := getTmdb(uri, tmdb.client, &videos)
 	return result.(*MovieVideos), err
 }
 
@@ -578,7 +578,7 @@ func (tmdb *TMDb) GetMovieUpcoming(options map[string]string) (*MovieDatedResult
 	var upcoming MovieDatedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/movie/upcoming?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &upcoming)
+	result, err := getTmdb(uri, tmdb.client, &upcoming)
 	return result.(*MovieDatedResults), err
 }
 

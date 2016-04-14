@@ -19,7 +19,7 @@ type AccountInfo struct {
 func (tmdb *TMDb) GetAccountInfo(sessionID string) (*AccountInfo, error) {
 	var account AccountInfo
 	uri := fmt.Sprintf("%s/account?api_key=%s&session_id=%s", baseURL, tmdb.apiKey, sessionID)
-	result, err := getTmdb(uri, &account)
+	result, err := getTmdb(uri, tmdb.client, &account)
 	return result.(*AccountInfo), err
 }
 
@@ -32,7 +32,7 @@ func (tmdb *TMDb) GetAccountLists(id int, sessionID string, options map[string]s
 	var lists MovieLists
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/lists?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
-	result, err := getTmdb(uri, &lists)
+	result, err := getTmdb(uri, tmdb.client, &lists)
 	return result.(*MovieLists), err
 }
 
@@ -46,7 +46,7 @@ func (tmdb *TMDb) GetAccountFavoriteMovies(id int, sessionID string, options map
 	var favorites MoviePagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/favorite/movies?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
-	result, err := getTmdb(uri, &favorites)
+	result, err := getTmdb(uri, tmdb.client, &favorites)
 	return result.(*MoviePagedResults), err
 }
 
@@ -60,7 +60,7 @@ func (tmdb *TMDb) GetAccountFavoriteTv(id int, sessionID string, options map[str
 	var favorites TvPagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/favorite/tv?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
-	result, err := getTmdb(uri, &favorites)
+	result, err := getTmdb(uri, tmdb.client, &favorites)
 	return result.(*TvPagedResults), err
 }
 
@@ -74,7 +74,7 @@ func (tmdb *TMDb) GetAccountRatedMovies(id int, sessionID string, options map[st
 	var favorites MoviePagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/rated/movies?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
-	result, err := getTmdb(uri, &favorites)
+	result, err := getTmdb(uri, tmdb.client, &favorites)
 	return result.(*MoviePagedResults), err
 }
 
@@ -88,7 +88,7 @@ func (tmdb *TMDb) GetAccountRatedTv(id int, sessionID string, options map[string
 	var favorites TvPagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/rated/tv?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
-	result, err := getTmdb(uri, &favorites)
+	result, err := getTmdb(uri, tmdb.client, &favorites)
 	return result.(*TvPagedResults), err
 }
 
@@ -102,7 +102,7 @@ func (tmdb *TMDb) GetAccountWatchlistMovies(id int, sessionID string, options ma
 	var favorites MoviePagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/watchlist/movies?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
-	result, err := getTmdb(uri, &favorites)
+	result, err := getTmdb(uri, tmdb.client, &favorites)
 	return result.(*MoviePagedResults), err
 }
 
@@ -116,6 +116,6 @@ func (tmdb *TMDb) GetAccountWatchlistTv(id int, sessionID string, options map[st
 	var favorites TvPagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/account/%v/watchlist/tv?api_key=%s&session_id=%s%s", baseURL, id, tmdb.apiKey, sessionID, optionsString)
-	result, err := getTmdb(uri, &favorites)
+	result, err := getTmdb(uri, tmdb.client, &favorites)
 	return result.(*TvPagedResults), err
 }

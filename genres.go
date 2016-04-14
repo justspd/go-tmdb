@@ -20,7 +20,7 @@ func (tmdb *TMDb) GetMovieGenres(options map[string]string) (*Genre, error) {
 	var movieGenres Genre
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/genre/movie/list?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &movieGenres)
+	result, err := getTmdb(uri, tmdb.client, &movieGenres)
 	return result.(*Genre), err
 }
 
@@ -32,6 +32,6 @@ func (tmdb *TMDb) GetTvGenres(options map[string]string) (*Genre, error) {
 	var tvGenres Genre
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/genre/tv/list?api_key=%s%s", baseURL, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &tvGenres)
+	result, err := getTmdb(uri, tmdb.client, &tvGenres)
 	return result.(*Genre), err
 }

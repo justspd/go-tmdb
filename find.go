@@ -37,6 +37,6 @@ func (tmdb *TMDb) GetFind(id, source string, options map[string]string) (*FindRe
 	var results FindResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/find/%s?api_key=%s&external_source=%s%s", baseURL, id, tmdb.apiKey, source, optionsString)
-	result, err := getTmdb(uri, &results)
+	result, err := getTmdb(uri, tmdb.client, &results)
 	return result.(*FindResults), err
 }

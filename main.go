@@ -20,6 +20,7 @@ var (
 // TMDb container struct for global properties
 type TMDb struct {
 	apiKey string
+	client http.Client
 }
 
 type apiStatus struct {
@@ -28,8 +29,8 @@ type apiStatus struct {
 }
 
 // Init setup the apiKey
-func Init(apiKey string) *TMDb {
-	return &TMDb{apiKey: apiKey}
+func Init(apiKey string, client http.Client) *TMDb {
+	return &TMDb{apiKey: apiKey, client: client}
 }
 
 // ToJSON converts from struct to JSON
@@ -39,7 +40,7 @@ func ToJSON(payload interface{}) (string, error) {
 	return string(jsonRes), err
 }
 
-func getTmdb(url string, payload interface{}) (interface{}, error) {
+func getTmdb(url string, client http.Client, payload interface{}) (interface{}, error) {
 	// Go single-threaded so we can deal with the rate limit
 	requestMutex.Lock()
 	defer requestMutex.Unlock()
@@ -50,7 +51,7 @@ func getTmdb(url string, payload interface{}) (interface{}, error) {
 		<-time.After(now.Sub(rateLimitReset))
 	}
 
-	res, err := http.Get(url)
+	res, err := client.Get(url)
 	if res.Header.Get(`x-ratelimit-remaining`) == `0` { // Out of requests for this period
 		reset := res.Header.Get(`x-ratelimit-reset`)
 		iReset, err := strconv.ParseInt(reset, 10, 64)

@@ -30,7 +30,7 @@ func (tmdb *TMDb) GetTvSeasonInfo(showID, seasonID int, options map[string]strin
 	var season TvSeason
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/tv/%v/season/%v?api_key=%s%s", baseURL, showID, seasonID, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &season)
+	result, err := getTmdb(uri, tmdb.client, &season)
 	return result.(*TvSeason), err
 }
 
@@ -43,7 +43,7 @@ func (tmdb *TMDb) GetTvSeasonChanges(id int, options map[string]string) (*TvChan
 	var changes TvChanges
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/tv/season/%v/changes?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &changes)
+	result, err := getTmdb(uri, tmdb.client, &changes)
 	return result.(*TvChanges), err
 }
 
@@ -52,7 +52,7 @@ func (tmdb *TMDb) GetTvSeasonChanges(id int, options map[string]string) (*TvChan
 func (tmdb *TMDb) GetTvSeasonCredits(showID, seasonNum int) (*TvCredits, error) {
 	var credits TvCredits
 	uri := fmt.Sprintf("%s/tv/%v/season/%v/credits?api_key=%s", baseURL, showID, seasonNum, tmdb.apiKey)
-	result, err := getTmdb(uri, &credits)
+	result, err := getTmdb(uri, tmdb.client, &credits)
 	return result.(*TvCredits), err
 }
 
@@ -64,7 +64,7 @@ func (tmdb *TMDb) GetTvSeasonExternalIds(showID, seasonNum int, options map[stri
 	var ids TvExternalIds
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/tv/%v/season/%v/external_ids?api_key=%s%s", baseURL, showID, seasonNum, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &ids)
+	result, err := getTmdb(uri, tmdb.client, &ids)
 	return result.(*TvExternalIds), err
 }
 
@@ -77,7 +77,7 @@ func (tmdb *TMDb) GetTvSeasonImages(showID, seasonNum int, options map[string]st
 	var images TvSeasonImages
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/tv/%v/season/%v/images?api_key=%s%s", baseURL, showID, seasonNum, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &images)
+	result, err := getTmdb(uri, tmdb.client, &images)
 	return result.(*TvSeasonImages), err
 }
 
@@ -89,6 +89,6 @@ func (tmdb *TMDb) GetTvSeasonVideos(showID, seasonNum int, options map[string]st
 	var videos TvVideos
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/tv/%v/season/%v/videos?api_key=%s%s", baseURL, showID, seasonNum, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &videos)
+	result, err := getTmdb(uri, tmdb.client, &videos)
 	return result.(*TvVideos), err
 }

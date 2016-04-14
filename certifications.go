@@ -18,7 +18,7 @@ type Certification struct {
 func (tmdb *TMDb) GetCertificationsMovieList() (*Certification, error) {
 	var movieCert Certification
 	uri := fmt.Sprintf("%s/certification/movie/list?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := getTmdb(uri, &movieCert)
+	result, err := getTmdb(uri, tmdb.client, &movieCert)
 	return result.(*Certification), err
 }
 
@@ -27,6 +27,6 @@ func (tmdb *TMDb) GetCertificationsMovieList() (*Certification, error) {
 func (tmdb *TMDb) GetCertificationsTvList() (*Certification, error) {
 	var tvCert Certification
 	uri := fmt.Sprintf("%s/certification/tv/list?api_key=%s", baseURL, tmdb.apiKey)
-	result, err := getTmdb(uri, &tvCert)
+	result, err := getTmdb(uri, tmdb.client, &tvCert)
 	return result.(*Certification), err
 }

@@ -15,7 +15,7 @@ type Keyword struct {
 func (tmdb *TMDb) GetKeywordInfo(id int) (*Keyword, error) {
 	var keywordInfo Keyword
 	uri := fmt.Sprintf("%s/keyword/%v?api_key=%s", baseURL, id, tmdb.apiKey)
-	result, err := getTmdb(uri, &keywordInfo)
+	result, err := getTmdb(uri, tmdb.client, &keywordInfo)
 	return result.(*Keyword), err
 }
 
@@ -28,6 +28,6 @@ func (tmdb *TMDb) GetKeywordMovies(id int, options map[string]string) (*MoviePag
 	var movies MoviePagedResults
 	optionsString := getOptionsString(options, availableOptions)
 	uri := fmt.Sprintf("%s/keyword/%v/movies?api_key=%s%s", baseURL, id, tmdb.apiKey, optionsString)
-	result, err := getTmdb(uri, &movies)
+	result, err := getTmdb(uri, tmdb.client, &movies)
 	return result.(*MoviePagedResults), err
 }
